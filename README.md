@@ -7,7 +7,9 @@ A linux script that runs as a daemon which monitors the clipboard and when it's 
 
 Pacman:
 `sudo pacman -Syy qrencode xclip xdg-open`
+
 Apt:
 `sudo apt update && sudo apt install qrencode xclip xdg-open`
+
 Dnf:
 `sudo dnf install qrencode xclip xdg-open`
