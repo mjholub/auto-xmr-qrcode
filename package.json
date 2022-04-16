@@ -1,7 +1,0 @@
-{
-    "dependencies": {
-        "qrencode": "^1.0.0";
-        "xdg-open": "^0.1.0";
-        "xclip";
-    }
-}
