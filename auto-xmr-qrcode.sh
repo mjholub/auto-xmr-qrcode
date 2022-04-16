@@ -1,19 +1,25 @@
-#!/bin/zsh
+#!/bin/bash
 #while true; do
 clipboard="$(xclip -o)"
 length=${#clipboard}
-until [ "$length != 95" ]; do
-sleep 1
-done
 dircheck() {
 	if [[ ! -d "$HOME/XMR Adress book" ]]; then
 	mkdir -p "$HOME/XMR Address book" && cd "$HOME/XMR Address book"
 	return
 	else
-	cd "$HOME/XMR Address book"
+	cd "$HOME/XMR Address book" || return
 	fi
 }
-
+idle(){
+until [ "$length" -ne 95 ]
+do
+sleep 1
+if [ "$length" == 95 ]; then
+	break
+fi
+done
+}
+idle
 if [ "$length" == 95 ]; then
 	dircheck
 	echo 'Press n for a temporary QR code (deleted after 10 minutes). To not generate a QR code, press q. Otherwise, type the filename:'
@@ -38,5 +44,8 @@ if [ "$length" == 95 ]; then
 	sleep 60
 	clear
 	fi
+while [ "$length" -ne 95 ]; do
+idle
+done
 #sleep 15
 #done
