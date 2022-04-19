@@ -1,5 +1,4 @@
 #!/bin/bash
-#while true; do
 clipboard="$(xclip -o)"
 length=${#clipboard}
 dircheck() {
@@ -10,19 +9,9 @@ dircheck() {
 	cd "$HOME/XMR Address book" || return
 	fi
 }
-idle(){
-until [ "$length" -ne 95 ]
-do
-sleep 1
-if [ "$length" == 95 ]; then
-	break
-fi
-done
-}
-idle
 if [ "$length" == 95 ]; then
 	dircheck
-	echo 'Press n for a temporary QR code (deleted after 10 minutes). To not generate a QR code, press q. Otherwise, type the filename:'
+	echo 'Press n for a temporary QR code (deleted after 10 minutes). To not generate a QR code, press q. Otherwise, type the filename (without extension):'
 	read -r filename
 	        if [ "$filename" = n ]; then
 			qrencode -o tmp.png "$clipboard"
@@ -36,7 +25,18 @@ if [ "$length" == 95 ]; then
 			rm tmpclip
 			clear
 		else
-			qrencode -o "$filename" "$clipboard"
+		echo 'Also save to a text file? (y/n)'
+		read -r contacts
+		if [ "$contacts" = y ]; then
+		if [ ! -f "default" ]; then
+		touch default
+		else
+		echo "$filename" ":" "$clipboard" >> default
+		fi
+		else
+		return
+		fi
+			qrencode -o "$filename".png "$clipboard"
 			xdg-open "$filename"
 			xclip /dev/null
 		fi
@@ -44,8 +44,5 @@ if [ "$length" == 95 ]; then
 	sleep 60
 	clear
 	fi
-while [ "$length" -ne 95 ]; do
-idle
-done
 #sleep 15
 #done
