@@ -18,11 +18,11 @@ if [ "$length" == 95 ]; then
 			xdg-open "tmp.png"
 			xclip /dev/null
 			sleep 600
-			rm tmp.png
+			shred tmp.png
 		elif [ "$filename" = q ]; then
 			echo "$clipboard " > tmpclip 
 			xclip tmpclip
-			rm tmpclip
+			shred tmpclip
 			clear
 		else
 		echo 'Also save to a text file? (y/n)'
